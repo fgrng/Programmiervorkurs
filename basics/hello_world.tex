@@ -2,104 +2,79 @@
 
 Die erste Lektion beschäftigt sich alleine mit der Frage, was eigentlich eine
 Programmiersprache überhaupt ist und wie wir den Computer dazu bringen können,
-daraus etwas zu machen, was er ausführen kann.  In guter alter
-Programmiertradition tun wir das an dem simpelsten aller Programme: Einem, was
-einfach nur ein „Hallo Welt!“ ausgibt.
+daraus etwas zu machen, was er ausführen kann. In guter alter
+Programmiertradition tun wir das an dem simpelsten aller Programme: Einem
+Programm, was einfach nur ein „Hallo Welt!“ ausgibt.
 
 Wie bringen wir also den Computer dazu, diese Ausgabe zu generieren? Dass er
 keine natürliche Sprache versteht, sollte klar sein - intern besteht er aus
 lauter Transistoren (wenn ihr nicht wisst, was das ist, denkt an winzige
-Schalter), die nur die Zustände „an“ und „aus“ kennen, wir müssen also die
-Anweisung „gebe Hallo Welt aus“ in ein Format übersetzen, was nur „an“ und
-„aus“ benutzt.
+Schalter), die nur die Zustände „an“ und „aus“ kennen. Wir müssen also die
+Anweisung „gebe Hallo Welt aus“ in ein Format übersetzen, was nur „an“ und „aus“
+benutzt.
 
-Früher wurde genau dies benutzt - meistens über Lochkarten, die vom Computer
-gelesen wurden, „ein Loch“ war dann zum Beispiel ein „an“ und „kein Loch“ war
-„aus“, so wurde dann das Programm in Reihen angeordnet und jede Reihe entsprach
-einem Befehl oder einem Parameter für diesen Befehl.  Dieses Format nennt sich
-„Maschinensprache“ und ist immer noch das, was wir heute dem Computer
-übergeben, nur, dass wir keine Lochkarten mehr benutzen, sondern Dateien, in
-denen lange Ströme von codierten 0en und 1en stehen.
+Früher wurde genau dieses Vorgehen tatsächlich direkt benutzt: meistens über
+Lochkarten, die vom Computer gelesen wurden, „ein Loch“ war dann zum Beispiel
+ein „an“ und „kein Loch“ war „aus“, so wurde dann das Programm in Reihen
+angeordnet und jede Reihe entsprach einem Befehl oder einem Parameter für diesen
+Befehl. Dieses Format nennt sich „Maschinensprache“ und ist immer noch das, was
+wir heute dem Computer übergeben, nur, dass wir keine Lochkarten mehr benutzen,
+sondern Dateien, in denen lange Ströme von codierten 0en und 1en stehen.
 
 Nun kann man sich vorstellen, dass es ganz schön anstrengend ist, ein
 umfangreiches Programm in 0en und 1en zu beschreiben. Deswegen benutzt man
 heutzutage so genannte Hochsprachen, um Programme zu beschreiben. Wir
 beschreiben also den Programmablauf in einer von Menschen lesbaren und
-verstehbaren Sprache -- wir benutzen hier \Cpp.  Die Programmbeschreibung in
-\Cpp legen wir dabei in einer Textdatei ab, meistens hat diese die Endung
-\texttt{.cpp}.
+verstehbaren Sprache -- wir benutzen hier \Java. Die Programmbeschreibung in
+\Java legen wir dabei in einer Textdatei ab, meistens hat diese die Endung
+\texttt{.java}.
 
 Diese Beschreibung des Programms übergeben wir dann an einen \emph{Compiler},
 der daraus dann Maschinencode generiert, den wir wiederum dem Computer zur
-Ausführung geben können.  Der Compiler für \Cpp, den wir in diesem Kurs
-benutzen wollen, heißt \texttt{g++}.
+Ausführung geben können. Der Compilervorgang für \Java wird von der
+Entwicklungsumgebung \Eclipse recht gut versteckt, sodass wir ihn kaum direkt
+wahrnehmen. Es ist dennoch wichtig zu verstehen, dass dieser Prozess abläuft.
 
-Dem Compiler übergeben wir die zu kompilierende Datei als Parameter, indem wir
-sie im Terminal dahinter schreiben:
-\begin{center}
-\texttt{g++ zuKompilierendeDatei.cpp}
-\end{center}
-Wir können zusätzlich den Namen der Ausgabedatei festlegen, indem wir vor diese
-ein \texttt{-o} (o für output) schreiben:
-\begin{center}
-\texttt{g++ -o outputDatei zuKompilierendeDatei.cpp}
-\end{center}
-
-Nachdem \texttt{g++} uns also ein Maschinencodefile \texttt{outputDatei}
-erzeugt hat, können wir es zur Ausführung bringen. Wir tun das, indem wir in
-einem Terminal
-\begin{center}
-	\texttt{./outputDatei}
-\end{center}
-eingeben, also einen Punkt, ein Slash und dann den Dateinamen.
-
-Zur besseren Übersichtlichkeit hier der ganze Vorgang noch mal in einem
-Diagramm:
-
-% TODO: Buttugly, but well...
-\begin{center}
-    \resizebox{\textwidth}{!}{
-        \begin{tikzpicture}
-            \node (nHelloWorldCpp) [ shape=rectangle, rounded corners = 0.1cm, draw=black, inner xsep=0.5cm, inner ysep = 0.3cm ] {\texttt{helloworld.cpp}};
-            \node (nHello) [ right of = nHelloWorldCpp, node distance = 9.5cm, shape=rectangle, rounded corners = 0.1cm, draw = black, inner xsep = 0.5cm, inner ysep = 0.3cm ] {\texttt{hello}};
-            \draw [->, thick, shorten >= 2pt, shorten <= 2pt ] (nHelloWorldCpp) -- (nHello) node [ midway, above, font = \small ] { \texttt{g++ -o hello helloworld.cpp}} ;
-            \node (nOutput) [ right of = nHello, node distance = 5cm, shape=rectangle ] {\texttt{"Hallo Welt!"}};
-            \draw [->, thick, shorten <= 2pt] (nHello) -- (nOutput) node [ midway, above ] {\texttt{./hello}};
-        \end{tikzpicture}
-    }
-\end{center}
+Dem Compiler wird von \Eclipse die zu kompilierende Textdatei übergeben. Dieser
+übersetzt die Textdatei in einen ausführbaren Code, der vom Computer\footnote{Um
+ehrlich zu sein, wird der Code nicht direkt vom Computer abgearbeitet.
+Normalerweise wird die Textdatei in Bytecode übersetzt und von der Java Runtime
+Environment (JRE) ausgeführt. Den Unterschied hier zu erklären, würde aber vom
+eigentlichen Thema ablenken.} abgearbeitet werden kann.
 
 \textbf{Praxis:}
 \begin{enumerate}
-	\item Öffnet ein Terminal (Konsole), ihr findet dies in den Anwendungen
-		(oben rechts) unter „Systemwerkzeuge“
-    \item Wechselt in das Verzeichnis \texttt{vorkurs/lektion01}, indem ihr
-		\texttt{cd vorkurs/lektion01}\footnote{was dieser Befehl genau tut und wie er funktioniert, erfahrt ihr in Lektion 2} eingebt und enter drückt.
-    \item In diesem Verzeichnis liegt eine Datei \texttt{helloworld.cpp}.
-        Benutzt \texttt{g++}, um diese zu einer Datei \texttt{hello} zu
-        kompilieren. Orientiert euch dazu an den Befehlen von oben.
-    \item Führt die Datei \texttt{hello} aus.
+  \item Ladet euch die Kursmaterialiern herunter und entpackt diese auf eurem Rechner.
+	\item Startet \Eclipse und ladet das Projekt \texttt{programmiervorkurs}.
+  \item Öffnet die Datei \texttt{HelloWorld.java}. 
+    \inputjava{inputoutput/HelloWorld.java}
+  \item Führt die Datei \texttt{HelloWolrd.java} aus. Dazu klickt ihr auf das
+    grüne Startsymbol am oberen Bildschirmrand.
+    \inputimage{run}
 \end{enumerate}
 
-\inputcpp{helloworld.cpp}
+Es sollte sich in einem unteren Teilfenster die „Konsole“ befinden, wo Ihr beim
+Ausführen des Programms eine Veränderung wahrnehmen solltet. 
+
+\inputimage{console}
+
+Wenn das alles funktioniert hat, bedeutet das, dass Eure Programmierumgebung
+richtig funktioniert und der weiteren Bearbeitung dieses Kurses keine
+technischen Hürden im Weg stehen sollten.
 
 \textbf{Spiel:}
 
 Ihr könnt nun versuchen, den Quellcode selbst zu verändern und damit ein wenig
-herumzuspielen. Öffnet dazu einen Editor (in den Anwendungen findet ihr z.B.
-unter „Zubehör“ den Editor gedit) und öffnet die Datei
-\texttt{vorkurs/lektion01/helloworld.cpp}\footnote{entweder mittels
-"Datei/Öffnen" in gedit oder über das Terminal mittels \texttt{gedit
-helloworld.cpp}}. Denkt daran, nach jeder Änderung die Datei zu speichern und
-im Terminal neu zu kompilieren und auszuführen.
+herumzuspielen. Denkt daran, nach jeder Änderung die Datei zu speichern und neu
+auszuführen.
 
-Dinge, die ihr ausprobieren könntet sind zum Beispiel:
+Dinge, die Ihr ausprobieren könntet sind zum Beispiel:
 \begin{enumerate}
-    \item Was passiert, wenn ihr „Hello world!“ in etwas anderes ändert?
-    \item Was passiert, wenn ihr die erste Zeile löscht (der Originalquellcode
-        ist in diesem pdf enthalten, ihr könnt sie also später wieder
-        herstellen)?
-    \item Was passiert, wenn ihr das „\verb|<< std::endl|“ löscht?
-    \item Wie könnte man mehrere Sätze ausgeben? Wie könnte man mehrere Zeilen
-        ausgeben?
+\item Was passiert, wenn Ihr „Hello World!“ in etwas anderes ändert?
+\item Was passiert, wenn Ihr die erste oder eine beliebige Zeile löscht (der
+  Originalquellcode ist in diesem pdf enthalten, ihr könnt sie also später
+  wieder herstellen)?
+\item Was passiert, wenn ihr das „\verb|out|“ in ein „\verb|err|“ ändert?
+\item Wie könnte man mehrere Sätze ausgeben? Wie könnte man mehrere Zeilen
+  ausgeben?
 \end{enumerate}

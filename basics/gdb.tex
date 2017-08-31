@@ -3,31 +3,31 @@
 \textbf{Fehlerklassen}
 
 Es ist wichtig, früh zu verstehen, dass es verschiedene Klassen von Fehlern in
-einem \Cpp Programm gibt, die sich alle zu unterschiedlichen Zeitpunkten
+einem \Java Programm gibt, die sich alle zu unterschiedlichen Zeitpunkten
 auswirken. Die Hauptsächliche Klasse von Fehlern, die wir bisher betrachtet
 haben, sind \emph{Compilerfehler}. Sie treten -- wie der Name nahe legt -- zur
-Compilezeit auf, also wenn ihr euer Programm kompilieren wollt. Meistens
-handelt es sich hier um relativ einfach erkennbare Fehler in der Syntax (wie
-zum Beispiel ein vergessenes Semikolon, oder eine vergessene geschweifte
-Klammer), um fehlende header (wie die \verb|\#include <...>| heißen) oder um
-undefinierte Variablen.
+Compilezeit auf, also wenn Ihr euer Programm in Maschinencode übersetzen wollt.
+Meistens handelt es sich hier um relativ einfach erkennbare Fehler in der Syntax
+des Programms (wie zum Beispiel ein vergessenes Semikolon, oder eine vergessene
+geschweifte Klammer) oder um undefinierte Variablen.
 
-Eine andere, besonders fiese Klasse von Fehlern haben wir in der letzten
-Lektion kennengelernt. Wenn wir nämlich durch eine Variable teilen, und in
-dieser Variable erst beim Programmlauf (zur \emph{Laufzeit}) eine 0 steht, so
-tritt eine so genannte \emph{floating point exception} auf. Der Compiler hat
-hier keine Chance, diesen Fehler zu erkennen - er weiß ja nicht, was der
-Benutzer später hier eingibt! Da diese Klasse von Fehlern zur Laufzeit auftritt
-heißen sie Laufzeitfehler. Und sie sind immer ein Zeichen von fundamentalen
-Fehlern im Programm. Sie sind also die am schwersten aufzutreibenden Fehler, da
-es keine automatischen Tools gibt, die uns bei ihrer Suche helfen.
+Eine andere, besonders fiese Klasse von Fehlern haben wir in der letzten Lektion
+kennengelernt. Wenn wir nämlich durch eine Variable teilen, und in dieser
+Variable erst beim Programmlauf (zur \emph{Laufzeit}) klar wird, dass dort eine
+0 steht, so tritt eine so genannte \emph{arithmetic exception} auf. Der Compiler
+hat hier keine Chance, diesen Fehler zu erkennen - er weiß ja nicht, was der
+Benutzer später hier eingeben wird! Da diese Klasse von Fehlern zur Laufzeit
+auftritt heißen sie \emph{Laufzeitfehler}. Und sie sind immer ein Zeichen von
+fundamentalen Fehlern im Programm. Sie sind also die am schwersten
+aufzutreibenden Fehler, da es keine automatischen Tools gibt, die uns bei ihrer
+Suche helfen.
 
-\textbf{gdb}
+\textbf{Der Debugger}
 
 Wir werden (noch) nicht lernen, wie wir den Fehler aus der letzten Lektion
-beheben können, aber wir werden ein wichtiges Tool kennen lernen, um
+behandeln können, aber wir werden ein wichtiges Tool kennen lernen, um
 Laufzeitfehler aufzuspüren, damit wir wenigstens wissen, wo wir mit der Lösung
-anfangen können: Den \emph{GNU debugger}, oder kurz gdb.
+anfangen können: Den \emph{Debugger} der Programmierumgebung \Eclipse.
 
 Der Debugger ist eine Möglichkeit, unser Programm in einer besonderen Umgebung
 laufen zu lassen, die es uns erlaubt es jederzeit anzuhalten, den Inhalt von
@@ -35,41 +35,41 @@ Variablen zu untersuchen oder auch Anweisung für Anweisung unser Programm vom
 Computer durchgehen zu lassen.
 
 Damit er das tun kann, braucht er vom Compiler ein paar zusätzliche
-Informationen, über den Quellcode, die normalerweise verloren gehen. Wir müssen
-dem Compiler dafür ein paar zusätzliche Optionen mitgeben:
-\begin{minted}{bash}
-g++ -O0 -g3 -o debugger debugger.cpp
-\end{minted}
-(Beachtet, dass im ersten Parameter erst ein großer Buchstabe o, dann eine 0 stehen)
-\inputcpp{debugger.cpp}
+Informationen, über den Quellcode. Der Debugger muss wissen, an welcher Stelle
+unseres Quellcodes er den Programmfluss unterbrechen soll, um ab dann
+Schrittweise weiterzumachen und uns jeweils den Inhalt von Variablen anzuzeigen.
+
+\javasect{debugging/Debugger.java}{7}{31}
+
 \textbf{Praxis:}
 \begin{enumerate}
-    \item Kompiliert das Programm mit den neuen Optionen für den debugger. Ihr
-        könnt es dann mittels \verb|gdb ./debugger| im gdb starten. Ihr solltet
-        nun ein wenig Text ausgegeben bekommen und einen anderen prompt
-        (\texttt{(gdb)}). Ihr könnt den debugger jederzeit wieder verlassen,
-        indem ihr \texttt{quit} eingebt (falls ihr gefragt werdet, ob ihr euch
-        sicher seid, gebt \texttt{y} ein und drückt enter)
-    \item Zu allererst müssen wir einen so genannten \emph{breakpoint} setzen,
-        das ist ein Punkt im Programmablauf, an dem es stoppen soll, damit wir
-        entscheiden können, was wir tun wollen. \texttt{main} ist für die
-        meisten unserer Programme eine sichere Wahl:
-        \mint{text}|break main|
-        Dann können wir das Programm mit \texttt{run} starten. Wir sollten die
-        erste Anweisung unseres Programmes angezeigt bekommen.
-    \item Der Debugger wird euch jetzt immer sagen, welches die nächste
-        Anweisung ist, die er ausführen möchte. Mit \texttt{next} könnt ihr sie
-        ausführen lassen, mit \texttt{print a} könnt ihr euch den Inhalt von
-        \texttt{a} zu diesem Zeitpunkt anschauen, mit \texttt{print b} den von
-        \texttt{b} und so weiter. Geht das Programm Schritt für Schritt durch
-        und lasst euch die Werte von \texttt{a}, \texttt{b} und \texttt{c} in
-        jedem Schritt ausgeben. Wenn der debugger euch sagt, dass euer Programm
-        beeendet wurde, gebt \texttt{quit} ein und beendet ihn.
+\item Zu allererst müssen wir einen so genannten \emph{Breakpoint} setzen: das
+  ist ein Punkt im Programmablauf, an dem vorerst gestoppt werden soll, damit
+  wir entscheiden können, was wir tun wollen. Der Beginn der \texttt{main} ist
+  für die meisten unserer Programme eine sichere Wahl. Durch einen Doppelklick
+  auf die Zeilennummer 8 am Beginn der \texttt{main} erzeugen wir einen
+  Breakpoint. Dieser wird durch einen kleinen, blauen Punkt dargestellt. Dann
+  müssen wir das Programm mit \texttt{debug} (kleines Käfersymbol) -- anstatt
+  wie bisher mit \texttt{run} (grünes Pfeilsymbol) --
+  starten. \inputimage{debug}
+\item Der Debugger wird euch jetzt den Zustand des Programms anzeigen, an dem
+  ihr den Breakpoint gesetzt habt. (Sollte sich die Oberfläche von \Eclipse
+  nicht automatisch ändern, meldet Euch bei Eurer Dozentin oder Eurem Dozenten.)
+  Die aktuell bekannten Variablen könnt ihr im Teilfenster oben rechts
+  inspizieren. \inputimage{inspect} Mit \texttt{step} könnt ihr den jeweils
+  nächsten Befehl im Programm ausführen lassen. Geht das Programm Schritt für
+  Schritt durch und schaut euch die Werte von \texttt{a}, \texttt{b}
+  und \texttt{c} in jedem Schritt an.
+\item Wenn der Debugger mit dem Programmlauf fertig ist oder ihr ihn vorzeitig
+  beendet wollt, könnt ihr ihn mit \texttt{Terminate} (rotes Stoppsymbol)
+  beenden. Anschließend müsst ihr in die normale \Java Ansicht zurückkehren. Das
+  erreicht ihr unter \texttt{Window, Perspective, Open Perspective,
+  Java}. \inputimage{returnjava}
 \end{enumerate}
 
 \textbf{Spiel:}
 \begin{enumerate}
-    \item Ihr habt nun schon einige Programme kennen gelernt. Kompiliert sie
-        für den Debugger neu und untersucht sie genauso wie obiges Programm,
-        solange ihr Lust habt.
+\item Ihr habt nun schon einige Programme kennen gelernt. Kompiliert und startet
+  sie mit dem Debugger neu untersucht sie genauso wie obiges Programm, solange
+  ihr Lust habt.
 \end{enumerate}

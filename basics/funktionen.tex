@@ -1,97 +1,103 @@
 \lesson{Funktionen}
 
-Wir haben den Begriff schon ein paarmal genannt und auch, wenn ihr es
-vielleicht nicht gemerkt habt, sie waren schon die ganze Zeit vor eurer Nase:
-Funktionen.
+Wir haben den Begriff schon ein paarmal genannt und auch, wenn ihr es vielleicht
+nicht gemerkt habt, sie waren schon die ganze Zeit vor eurer Nase: Funktionen.
 
 Eine Funktion ist im Wesentlichen eine Möglichkeit, eine Folge von Anweisungen
-zu bündeln und isolieren. Wir haben schon einmal ein Programm gesehen, mit dem
-wir testen können, ob eine Zahl eine Primzahl ist, oder nicht. Viele Vorteile
-von Funktionen, lassen sich an diesem Beispiel illustrieren. Stellt euch vor,
-ihr braucht in eurem Programm an vielen Stellen einen solchen Primzahltest. Ihr
-könntet jedes mal den gesamten benötigten Code hinschreiben, aber das wäre doch
-eine Menge Arbeit. Eine Funktion ermöglicht es euch, den Code zum Testen
-auszulagern in eine eigene Funktion z.B. \texttt{istprim}. Immer, wenn ihr dann
-testen wollt, ob eine Zahl \texttt{n} eine Primzahl ist, könnt ihr dann einfach
-schreiben \texttt{istprim(n)} und ruft damit die Funktion auf. Das spart
-Schreibarbeit.
+zu bündeln und zu isolieren. Wir haben schon einmal ein Programm gesehen, mit
+dem wir testen können, ob eine Zahl eine Primzahl ist, oder nicht. Viele
+Vorteile von Funktionen, lassen sich an diesem Beispiel illustrieren. Stellt
+euch vor, ihr braucht in eurem Programm an vielen Stellen einen solchen
+Primzahltest. Ihr könntet jedes mal den gesamten benötigten Code hinschreiben,
+aber das wäre doch eine Menge Arbeit. Eine Funktion ermöglicht es euch, den Code
+für den Primzahltest in eine eigene Funktion auszulagern, nennen wir
+sie \texttt{istPrim}. Immer, wenn Ihr dann testen wollt, ob eine Zahl \texttt{n}
+eine Primzahl ist, könnt Ihr dann einfach schreiben \texttt{istprim(n)} und ruft
+damit die Funktion auf. Das spart Schreibarbeit!
 
-Stellt euch vor, irgendwann ist euch dann ein Test mittels Probedivision nicht
+Stellt Euch vor, irgendwann ist Euch dann ein Test mittels Probedivision nicht
 mehr schnell genug (weil ihr z.B. immer größere Zahlen testen wollt) und ihr
 wollt auf einen schnelleren Test umsteigen. Ohne Funktionen müsstet ihr jedes
-Vorkommen eines Primzahltests in eurem Code einzeln durch den neuen Test
-ersetzen. Mit Funktionen gibt es genau eine Stelle, an der ihr den Code
+Vorkommen eines Primzahltests in Eurem Code einzeln durch den neuen Test
+ersetzen. Mit Funktionen gibt es genau eine Stelle, an der Ihr den Code
 austauschen müsst und all die Stellen, an denen ihr ihn benutzt, übernehmen
 automatisch die neue Implementation.
 
 Zuletzt haben wir in der letzten Lektion einiges über Lesbarkeit von Quellcode
 gelernt. Lesbarkeit erhöht Wartbarkeit und reduziert die Möglichkeiten, Fehler
-zu machen. Was stellt ihr euch lesbarer vor, eine Datei, in der einige tausend
-Zeilen Code stehen, ohne sichtbare Struktur und einfach nur als Folge von
-Anweisungen, oder mehrere kleine Datein, mit beschreibenden, verständlichen
-Namen, in denen jeweils mehrere Fun¡tionen, ebenfalls mit verständlichen Namen
-stehen, das alles schön aufgeteilt nach Themengebiet? Funktionen erhöhen
-Lesbarkeit und helfen, den Code zu strukturieren, was ihn verständlicher macht.
+zu machen. Was stellt ihr Euch lesbarer vor, eine Datei, in der einige tausend
+Zeilen Code stehen, einfach nur als Folge von Anweisungen ohne sichtbare
+Struktur, oder mehrere kleine Datein, mit beschreibenden, verständlichen Namen,
+in denen jeweils mehrere Funktionen, ebenfalls mit verständlichen Namen stehen,
+das alles schön aufgeteilt nach Themengebieten? Funktionen erhöhen Lesbarkeit
+und helfen, den Code zu strukturieren, was ihn verständlicher macht.
 
 Das wohl wichtigste Beispiel für eine Funktion habt ihr bereits kennengelernt:
 Die \texttt{main}-Funktion. Diese spezielle Funktion ist der Eintrittspunkt für
 euer Programm. Der Code der \texttt{main}-Funktion ist der erste, der läuft,
 sobald die \texttt{main} fertig abgearbeitet ist, beendet sich euer Programm.
-Damit haben wir auch schon die Wesentlichen Eckpunkte, wie eine Funktion
-syntaktisch auszusehen hat.
+Damit können wir an der \texttt{main} Funktion die wesentlichen Eckpunkte
+ablesen, wie eine Funktion syntaktisch auszusehen hat.
 
-Das \texttt{int main()} heißt die \emph{Signatur} der Funktion. Die Signatur
-enthält immer den Datentyp, den die Funktion ausgeben soll (in diesem Fall
-\texttt{int}, also eine ganze Zahl), einen Namen (in diesem Fall der spezielle
-Name \texttt{main}) sowie Parameter, die Eingabewerte (in diesem Fall gibt es
-keine Parameter, wir werden aber gleich sehen, wie eine Funktion auszusehen
-hat, die Parameter entgegennimmt). An die Signatur schließt sich direkt eine
-öffnende geschweifte Klammer, dann kommen alle Anweisungen, aus denen die
-Funktion bestehen soll, dann eine schließende geschweifte Klammer.
+Der Abschnitt
+\begin{center}
+  \texttt{public static void main(String[] args)}
+\end{center}
+heißt die \emph{Signatur} der Funktion. Wir ignorieren an dieser Stelle die
+Schlüsselwörter \texttt{public} und \emph{static}. Die Signatur enthält immer
+den Datentyp, den die Funktion ausgeben soll (in diesem Fall \texttt{void}, also
+den „leeren Datentyp“. Diesen verwendet man, wenn keine Rückgabe einer Funktion
+erwartet wird.), einen Namen (in diesem Fall der spezielle Name \texttt{main})
+sowie Parameter, die Eingabewerte (in diesem Fall ein Parameter namens
+\texttt{args} vom Datentyp \texttt{String[]}). An die Signatur schließt sich
+direkt eine öffnende geschweifte Klammer, dann kommen alle Anweisungen, aus
+denen die Funktion bestehen soll, dann eine schließende geschweifte Klammer.
 
 Um das Ergebnis einer Funktion zurückzugeben, benutzen wir \texttt{return}. Wir
 haben das bereits einmal gesehen, wo wir es benutzt haben, um unser Programm zu
 beenden -- das funktionierte in dem Fall, weil wir uns in der \texttt{main}
-befanden und wie gesagt beendet sich das Programm, sobald die \texttt{main}
+befanden und wie gesagt, beendet sich das Programm, sobald die \texttt{main}
 fertig ist. Mit Funktionen könnte ein Programm, was eine Zahl darauf testet,
 eine Primzahl zu sein, so aussehen:
-\inputcpp{funktion.cpp}
+
+\javasect{funktionen/Funktion.java}{7}{46}
 
 Parameter geben wir also in den Klammern an, jeweils so, wie wenn wir eine
 Variable erstellen würden, mit einem Typ und einem Namen. Wenn wir mehrere
 Parameter brauchen, können wir sie mit Kommata trennen. Dann müssen wir auch,
-wenn wir die Funktion benutzen, die einzelnen Eingaben mit Kommata trennen.
+wenn wir die Funktion an anderer Stelle benutzen, die einzelnen Eingaben mit
+Kommata trennen.
 
 \textbf{Praxis:}
 \begin{enumerate}
-    \item Schreibt eine Funktion, die einen Parameter vom Typ
-        \texttt{std::string} hat und einen Rückgabewert vom Typ \texttt{int}.
-        Die Funktion soll -- so wie wir es bisher schon in vielen Programmen
-        gemacht haben -- den eingegebenen String (der z.B. die Aufforderung
-        enthält, eine Zahl einzugeben) auf die Konsole ausgeben und einen
-        \texttt{int} von der Nutzerin einlesen. Dieser eingelesene \texttt{int}
-        soll dann von der Funktion zurückgegeben werden.
-        Denkt euch einen sprechenden Namen für diese Funktion aus.
-    \item Passt \texttt{funktion.cpp} so an, dass es eure Funktion benutzt.
-    \item Kompiliert das angepasste Programm und lasst es im debugger Schritt
-        für Schritt durchlaufen. Um die Funktion durchlaufen zu lassen, habt
-        ihr zwei Möglichkeiten: Ihr könnt einen neuen breakpoint in der
-        Funktion erstellen, oder ihr könnt, sobald der debugger euch anzeigt,
-        als nächstes die Funktion aufrufen zu wollen, \texttt{step} statt
-        \texttt{next} aufrufen, sodass er in die Funktion hineinspringt.
+\item Schreibt eine Funktion, die einen Parameter vom Typ
+  \texttt{String} hat und einen Rückgabewert vom Typ \texttt{int}. Die Funktion
+  soll -- so wie wir es bisher schon in vielen Programmen gemacht haben -- den
+  eingegebenen String (der z.B. die Aufforderung enthält, eine Zahl einzugeben)
+  auf die Konsole ausgeben und einen \texttt{int} von der Nutzerin einlesen.
+  Dieser eingelesene \texttt{int} soll dann von der Funktion zurückgegeben
+  werden. Denkt euch einen sprechenden Namen für diese Funktion aus. (Ihr müsst
+  vor die Angabe des Rückgabewertes die Schlüsselwörter \texttt{public static}
+  schreiben und diese Voraussetzung zum jetzigen Zeitpunkt einfach so
+  hinnehmen.)
+\item Passt \texttt{Funktion.java} so an, dass es Eure Funktion benutzt.
+\item Kompiliert das angepasste Programm und lasst es im Debugger Schritt für
+  Schritt durchlaufen. Um die Funktion durchlaufen zu lassen, habt Ihr zwei
+  Möglichkeiten: Ihr könnt einen neuen Breakpoint in der Funktion erstellen oder
+  das Programm so lange Schritt für Schritt ablaufen, bin ihr in der Funktion
+  angekommen seid.
 \end{enumerate}
 
 \textbf{Spiel:}
 \begin{enumerate}
-    \item Vertauscht in \texttt{funktion.cpp} die Funktion \texttt{istprim} mit
-        der Funktion \texttt{main} (verschiebt also die gesamte Funktion
-        \texttt{istprim} an das Ende der Datei). Versucht, die Datei zu
-        kompilieren. Was ist die Fehlermeldung des Compilers?
-    \item Verschiebt die Funktion \texttt{istprim} \emph{in} die
-        \texttt{main}-Funktion (also irgendwo nach der öffnenden geschweiften
-        Klammern, aber vor die dazu gehörige schließende). Versucht, die Datei
-        zu kompilieren. Was ist die Fehlermeldung des Compilers?
-    \item Schaut euch eure bisherigen Lösungen an. Findet ihr noch häufiger
-        Stellen, an denen ihr einzelne Teilprogramme in Funktionen auslagern
-        könnt?
+\item Vertauscht in \texttt{Funktion.java} die Funktion \texttt{istPrim} mit
+  der Funktion \texttt{main} (verschiebt also die gesamte Funktion
+  \texttt{istprim} an das Ende der Datei). Versucht, die Datei zu
+  kompilieren. Was ist die Fehlermeldung des Compilers?
+\item Verschiebt die Funktion \texttt{istPrim} \emph{in} die
+  \texttt{main}-Funktion (also irgendwo nach der öffnenden geschweiften
+  Klammern, aber vor die dazu gehörige schließende). Versucht, die Datei zu
+  kompilieren. Was ist die Fehlermeldung des Compilers?
+\item Schaut Euch Eure bisherigen Lösungen aus den anderen Kapiteln an. Findet ihr noch häufiger
+  Stellen, an denen ihr einzelne Teilprogramme in Funktionen auslagern könnt?
 \end{enumerate}

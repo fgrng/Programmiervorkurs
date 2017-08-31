@@ -1,105 +1,109 @@
 \lesson{Fehlermeldungen und häufige Fehler}
 
-Wenn ihr in den vergangen Lektionen ein bisschen herumprobiert habt, wird es
-euch sicher das ein oder andere mal passiert sein, dass euch der Compiler statt
+Wenn Ihr in den vergangen Lektionen ein bisschen herumprobiert habt, wird es
+Euch sicher das ein oder andere mal passiert sein, dass Euch der Compiler statt
 eines funktionierenden Programms eine Riesenmenge Fehlermeldungen ausgespuckt
-hat und ihr einen Schreck bekamt und schon dachtet, ihr hättet alles kaputt
+hat und Ihr einen Schreck bekamt und schon dachtet, ihr hättet alles kaputt
 gemacht.
 
-\texttt{g++} ist leider bei Fehlermeldungen immer sehr ausführlich und gibt
-euch lieber viel zu viel, als viel zu wenig aus. Das kann im ersten Blick ein
+\texttt{Eclipse} ist bei Fehlermeldungen immer sehr hilfsbereit und gibt
+euch lieber zu viel, als wenig Informationen aus. Das kann im ersten Blick ein
 bisschen überwältigend wirken, aber wenn man einmal gelernt hat, wie die
 Fehlermeldungen am Besten zu lesen sind, ist das alles gar nicht mehr so
 schlimm.
 
 Wir schieben deswegen eine Lektion über häufige Fehlerquellen ein und wie man
-Fehlermeldungen von \texttt{g++} liest, um möglichst schnell die Ursache des
-Fehlers zu finden.
+Fehlermeldungen von \Eclipse liest, um möglichst schnell die Ursache des Fehlers
+zu finden.
 
 Nehmen wir z.B. mal folgendes Programm:
 
-\inputcpp{fehler1.cpp}
+\inputjava{fehlermeldungen/Fehler1.java}
 
-Wenn wir versuchen, dieses zu kompilieren, gibt uns \texttt{g++} folgendes aus:
+Wenn wir versuchen, dieses zu kompilieren, gibt uns \texttt{Eclipe} folgendes
+aus:
 
-\begin{textcode*}{label=g++ -o fehler1 fehler1.cpp}
-fehler1.cpp: In function 'int main()':
-fehler1.cpp:2:5: error: 'cout' is not a member of 'std'
-fehler1.cpp:2:35: error: 'endl' is not a member of 'std'
+{\small
+\begin{textcode*}{label=Run Fehler1.Java in Eclipse}
+Exception in thread "main" java.lang.Error: Unresolved compilation problem:
+  The method print(string) is undefined for the type System
+  at fehlermeldungen.Fehler1.main(Fehler1.java:8)
 \end{textcode*}
+}
 
 Wenn wir diese Fehlermeldung verstehen wollen, fangen wir immer ganz oben an,
 egal wie viel Text uns der Compiler ausspucken mag. In diesem Fall sagt uns die
-erste Zeile, in welcher Datei (\texttt{fehler1.cpp}) der Fehler aufgetreten ist
-und in welcher Funktion (\texttt{int main()}). Die beiden Zeilen
-danach sind sogar noch spezifischer: Sie enthalten zu Beginn den Dateinamen,
-dann einen Doppelpunkt, gefolgt von einer Zeilennummer, gefolgt von einer
-Spaltennummer. Das gibt euch ganz genau die Stelle an, an der der Compiler
-etwas an eurem Code zu bemängeln hat. In diesen Fall ist, was der Compiler
-bemängelt, dass \texttt{cout} bzw. \texttt{endl} nicht in \texttt{std} sind.
-Was genau \texttt{std} bedeutet muss uns nicht interessieren, aber der Rest
-sagt uns (mit ein bisschen Erfahrung) dass wir die Definition von \texttt{cout}
-und \texttt{endl} nicht haben - was nicht weiter verwunderlich ist, denn diese
-beiden Dinge werden in der Datei \texttt{iostream} definiert, die wir früher
-immer includiert haben.
+erste Zeile, dass ein Fehler beim Compilieren (und nicht beim Ausführen)
+aufgetreten ist (\texttt{Unresolved compilation problem}). Die nächste Zeile
+verrät uns, was der Fehler war: Eine Methode ist undefiniert (\texttt{method
+print(String) is undefined}). Die Zeile danach verrät uns noch genauer, wo der
+Fehler passiert ist oder wo \Eclipse den Fehler vermutet (\texttt{at
+fehlermeldungen.Fehler1.main(Fehler1.java:8)}. Der Fehler ergab sich im
+Paket \texttt{fehlermeldungen} in der Datei \texttt{Fehler1.java} in der Zeile
+8.
 
-Damit wissen wir jetzt auch (endlich) was das \mint{c++}|#include <iostream>|
-zu bedeuten hatte. Offenbar brauchen wir das, wenn wir Konsolen input und
-output machen wollen, da es die Definitionen von \texttt{cout}, \texttt{cin},
-\texttt{endl} und ähnlichem enthält.
+Das gibt Euch ganz genau die Stelle an, an der der Compiler etwas an eurem Code
+zu bemängeln hat. In diesen Fall ist, was der Compiler bemängelt, dass die
+Methode \texttt{print} nicht im \texttt{System} definiert ist. Das sagt uns (mit
+ein bisschen Erfahrung), dass wir die Definition von \texttt{print} nicht was --
+nicht weiter verwunderlich ist, denn diese beiden Dinge werden
+im \texttt{out}-Teil von \texttt{System} und nicht in \texttt{System} selber
+definiert. Wir haben hier vergessen, dass \texttt{out} anzugeben.
+
+Damit wissen wir jetzt auch (endlich) was wir ändern müssen. Anstatt die
+Methode \texttt{print} direkt von \texttt{System} auszurufen, müssen
+wir \texttt{print} von \texttt{System.out} angeben. Offenbar ist sonst unklar,
+welche Ausgabemöglichkeit des Systems verwendet werden soll. (Es gibt etwa noch
+die Möglichkeit \texttt{print} von \texttt{System.err} zu verwenden, um
+Warnungen oder Fehlerhinweise für unser Programm gesondert auszugeben.)
 
 Der nächste sehr häufig vorkommende Fehler ist subtiler:
 
-\inputcpp{fehler2.cpp}
+\javasect{fehlermeldungen/Fehler2.java}{3}{13}
 
 Wenn wir versuchen, dies zu kompilieren, bekommen wir vom Compiler
 entgegengespuckt:
 
-\begin{textcode*}{label=g++ -o fehler2 fehler2.cpp}
-fehler2.cpp: In function 'int main()':
-fehler2.cpp:5:1: error: expected ';' before '}' token
+{\small
+\begin{textcode*}{label=Run Fehler1.Java in Eclipse}
+Exception in thread "main" java.lang.Error: Unresolved compilation problem:
+  Syntax error, insert ";" to complete BlockStatements
+  at fehlermeldungen.Fehler1.main(Fehler2.java:8)
 \end{textcode*}
+}
 
-Wiederum sagt uns die erste Zeile, in welcher Datei und Funktion der Fehler
-aufgetreten ist. Die zweite Zeile sagt uns wo, nämlich in Zeile 5, direkt am
-Anfang. Die Beschwerde des Compilers ist, dass er ein Semikolon erwartet hat,
-aber eine geschlossene geschweifte Klammer gefunden hat. Der Grund dafür ist,
-dass in \Cpp erwartet wird, dass jede Anweisung mit einem Semikolon abgeslossen
-wird.  Wenn ihr euch die bisherigen Quellcodedateien anschaut, werdet ihr
-feststellen, dass hinter den allermeisten Zeilen ein solches Semikolon steht.
-Hier fehlt es allerdings nach der Ausgabe in Zeile 4. Sobald wir es hinzufügen,
-beschwert sich der Compiler nicht mehr.
-
-Hier zeigt sich eine ein bisschen verwirrende Angewohnheit von Fehlermeldungen
-von \Cpp: Obwohl der Compiler behauptete, der Fehler läge in Zeile 5, lag er in
-Wahrheit bereits in Zeile 4. Hier müsst ihr dem dummen Compiler ein wenig
-nachsichtig sein - er kann es einfach nicht besser wissen. Wenn ihr also mal in
-der richtigen Zeilennummer nachschlagt, aber nicht wisst, wo dort der Fehler
-sein sollte, schaut vielleicht mal ein oder zwei Zeilen darüber, vielleicht
-wusste der Compiler es einfach nicht besser.
+Wiederum sagt uns die erste Zeile, was für ein Fehler aufgetreten ist. Die
+zweite Zeile liefert uns eine genauere Fehlerbeschreibung. Die dritte Zeile sagt
+uns genauer wo die Fehlerquelle erwartet wird, nämlich in Zeile 8. Die
+Beschwerde des Compilers ist, dass er ein Semikolon erwartet hat, aber keins
+gefunden hat. Der Grund dafür ist, dass in \Java erwartet wird, dass jede
+Anweisung mit einem Semikolon abgeschlossen wird. Wenn ihr euch die bisherigen
+Quellcodedateien anschaut, werdet ihr feststellen, dass hinter den allermeisten
+Zeilen ein solches Semikolon steht. Hier fehlt es allerdings nach der Ausgabe in
+Zeile 8. Sobald wir es hinzufügen, beschwert sich der Compiler nicht mehr.
 
 \textbf{Praxis:}
 \begin{enumerate}
-    \item Versucht, folgende Dateien zu kompilieren und schaut euch die
-        Fehlermeldung an. In welcher Zeile, in welcher Spalte liegt der Fehler?
-        Was gibt euch der Compiler als Fehlermeldung aus?
-    \item Versucht, die aufgetretenen Fehler zu korrigieren. Bekommt ihr es
-        hin, dass der Compiler sich nicht mehr beschwert und das Programm
-        korrekt arbeitet (schaut euch ggf. die bisher gezeigten Quellcodes an)?
+\item Versucht, folgende Dateien zu kompilieren und schaut euch die
+  Fehlermeldung an. In welcher Zeile, in welcher Spalte liegt der Fehler? Was
+  gibt euch der Compiler als Fehlermeldung aus?
+  \javasect{fehlermeldungen/Fehler3.java}{3}{13}
+  \javasect{fehlermeldungen/Fehler4.java}{7}{23}
+\item Versucht, die aufgetretenen Fehler zu korrigieren. Bekommt ihr es hin,
+  dass der Compiler sich nicht mehr beschwert und das Programm korrekt arbeitet
+  (schaut euch ggf. die bisher gezeigten Quellcodes an)?
 \end{enumerate}
-
-\inputcpp{fehler3.cpp}
-\inputcpp{fehler4.cpp}
 
 \textbf{Spiel:}
 \begin{enumerate}
-    \item Das folgende Programm enthält mehrere Fehler. Bekommt ihr trotzdem
-        raus, welche das sind und könnt ihr sie beheben (Tipp: „c++ math“ zu
-        \href{http://lmgtfy.com/?q=c\%2B\%2B+math}{googlen} kann euch hier vielleicht weiter bringen)?
-    \item Wenn ihr in den Vergangen Lektionen ein bisschen gespielt habt und
-        vereinzelnd versucht habt, Dinge zu löschen, Werden euch viele
-        Fehlermeldungen begegnet sein, versucht, diese zu lesen und
-        interpretieren, was euch der compiler hier sagen will.
-\end{enumerate}
+\item Das folgende Programm enthält mehrere Fehler. Bekommt ihr trotzdem raus,
+  welche das sind und könnt ihr sie beheben (Tipp: „Java math“ zu
+  \href{http://lmgtfy.com/?q=java+math}{googlen} kann euch hier vielleicht
+  weiter bringen)?
+  \inputjava{fehlermeldungen/Fehler5.java}
 
-\inputcpp{fehler5.cpp}
+\item Wenn ihr in den Vergangen Lektionen ein bisschen gespielt habt und
+  vereinzelnd versucht habt, Dinge zu löschen, Werden euch viele Fehlermeldungen
+  begegnet sein, versucht, diese zu lesen und interpretieren, was euch der
+  compiler hier sagen will.
+\end{enumerate}

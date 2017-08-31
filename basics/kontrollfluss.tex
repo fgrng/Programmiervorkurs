@@ -1,38 +1,38 @@
 \lesson{Der Kontrollfluss}
 
-Nachdem wir ein bisschen etwas über den Debugger verstanden haben (wir werden
+Nachdem wir etwas über die Verwendung des Debugger verstanden haben (wir werden
 ihn noch häufiger benutzen), können wir uns nun wieder unserem Problem mit der
 Division durch 0 zuwenden.
 
-\inputcpp{arith4.cpp}
+\javasect{arithmetik/Arith4.java}{10}{23}
 
-Wenn wir dieses Programm kompilieren und als zweite Zahl eine 0 eingeben,
-werden wir auf der Konsole ausgegeben bekommen:
+Wenn wir dieses Programm kompilieren und als zweite Zahl eine 0 eingeben, werden
+wir auf der Konsole ausgegeben bekommen:
 \begin{minted}{text}
 Gebe eine Zahl ein: 5
 Gebe noch eine Zahl ein: 0
-Floating point exception
+Exception in thread "main" ...
 \end{minted}
-(Gegebenenfalls ist die letzte Zeile bei euch auch in einer anderen Sprache)
 
-Wir können das Programm auch einmal im debugger ausführen und werden wenig
-überraschend feststellen, dass die Anweisung, an der diese floating point
-exception auftritt die ist, in der die Division steht.
+Wir können das Programm auch einmal im Debugger ausführen und werden wenig
+überraschend feststellen, dass die Anweisung, an der diese arithmetic exception
+auftritt die ist, in der die Division steht.
 
 Wenn wir diesen Fehler beheben wollen, haben wir eigentlich nur zwei
-Möglichkeiten: Die erste ist, die Schuld auf die Benutzerin zu schieben, warum
-versucht er auch, eine 0 einzugeben? Ich hoffe, ihr stimmt zu, dass das nicht
-sehr freundlich wäre. Stellt euch vor, jedes mal, wenn ihr in einem Programm
-einen Wert eingibt, auf den das Programm nicht vorbereitet ist, würde es direkt
-abstürzen. Das fändet ihr vermutlich nicht so gut, es sollte doch zumindest mal
-eine Fehlermeldung ausgeben und die Nutzerin informieren, dass sie was falsch
-gemacht hat.
+Möglichkeiten: Die erste ist, ihn zu ignorieren und die Schuld auf die
+Benutzerin zu schieben: Warum versucht sie auch, eine 0 einzugeben? Ich hoffe,
+Ihr stimmt zu, dass das nicht sehr freundlich wäre. Stellt euch vor, jedes mal,
+wenn ihr in einem Programm einen Wert eingebt, auf den das Programm nicht
+vorbereitet ist, würde es direkt abstürzen. Das fändet ihr vermutlich nicht so
+gut, es sollte doch zumindest mal eine Fehlermeldung ausgeben und die Nutzerin
+informieren, dass sie was falsch gemacht hat. Sonst macht sie es beim nächsten
+Mal wieder falsch.
 
 Und das ist der zweite Weg, den wir jetzt einschlagen wollen. Unser Programm
 sollte am Besten, nachdem es die Eingabe von der Benutzerin entgegen genommen
 hat, einfach überprüfen, ob die Division erlaubt ist oder nicht. Sollte die
-Nutzerin eine 0 eingegeben haben, sollte es auf den Fehler hinweisen und sich
-beenden, sonst sollte es den Quotienten ausgeben. Diese Abhängigkeit des
+Nutzerin eine 0 eingegeben haben, sollte sie auf den Fehler hingewiesen werden,
+ansonsten sollte das Programm den Quotienten ausgeben. Diese Abhängigkeit des
 Verhaltens eines Programms von den Eingaben, bezeichnen wir als
 \emph{Kontrollfluss}, man kann das mit einem Diagramm verdeutlichen:
 
@@ -54,43 +54,43 @@ Verhaltens eines Programms von den Eingaben, bezeichnen wir als
     \end{tikzpicture}
 \end{center}
 
-Die einfachste Möglichkeit, den Kontrollfluss zu ändern, besteht in so
+Die einfachste Möglichkeit, den Kontrollfluss zu ändern, besteht durch so
 genannten „bedingten Anweisungen“:
-\inputcpp{if.cpp}
 
-In den Zeilen 12 bis 20 sehen wir, wie eine solche Bedingte Anweisung in \Cpp
-aussieht. Wir erkennen relativ direkt unser Diagramm hier wieder: In Zeile 12
-steht der „$b=0$?“ Block, in den Zeilen 13 bis 17 steht der „Gib Fehler aus“
-Block und in Zeile 19 der „Gib den Quotienten aus“ Block.
+\javasect{control/If.java}{11}{34}
 
-Beachtet allerding die doppelten Gleichheitszeichen in Zeile 12. \Cpp hat
-getrennte Operatoren für Vergleiche und Zuweisungen - Doppelte
+In den Zeilen 21 bis 30 sehen wir, wie eine solche Bedingte Anweisung in \Java
+aussieht. Wir erkennen relativ direkt unser Diagramm hier wieder: In Zeile 21
+steht der „$b=0$?“ Block, in den Zeilen 22 bis 25 steht der „Gib Fehler aus“
+Block und in den Zeilen 27 bis 28 der „Gib den Quotienten aus“ Block.
+
+Beachtet allerding die doppelten Gleichheitszeichen „\verb|==|“ in Zeile
+21. \Java hat getrennte Operatoren für Vergleiche und Zuweisungen -- Doppelte
 Gleichheitszeichen bedeuten Vergleich („sind diese beiden gleich?“), ein
 einfaches Gleichheitszeichen bedeutet Zuweisung („mache diese beiden gleich!“).
 
 \textbf{Praxis:}
 \begin{enumerate}
-    \item Kompiliert \texttt{if.cpp} für den debugger und lasst das Programm im
-        gdb laufen. Geht Schritt für Schritt durch das Programm, mit
-        verschiedenen Eingaben (wenn ihr am Ende des Programms angekommen seid,
-        könnt ihr es mit einem erneuten „run“ neu starten)
-    \item Nutzt Google, um herauszufinden, welche anderen Vergleichsoperatoren
-        es in \Cpp noch gibt. Versucht, das Programm so zu verändern, dass es
-        auf Ungleichheit testet, statt auf Gleichheit (sich sonst aber genauso
-        verhält).
-	\item Wie würdet ihr testen, ob zwei Zahlen durch einander teilbar sind
-		(Tipp: Ihr kennt bereits die Division mit Rest in \Cpp (modulo))?
-		Schreibt ein Programm, welches zwei Zahlen von der Nutzerin entgegen
-		nimmt und ausgibt, ob die zweite Zahl die erste teilt.
+\item Kompiliert \texttt{If.java} für den Debugger und lasst das Programm im
+  Debugger laufen. Geht Schritt für Schritt durch das Programm, mit
+  verschiedenen Eingaben (wenn ihr am Ende des Programms angekommen seid, könnt
+  ihr es erneut starten).
+\item Nutzt Google, um herauszufinden, welche anderen Vergleichsoperatoren
+  es in \Java noch gibt. Versucht, das Programm so zu verändern, dass es
+  auf Ungleichheit testet, statt auf Gleichheit (sich sonst aber genauso
+  verhält).
+\item Wie würdet ihr testen, ob zwei Zahlen durch einander teilbar sind (Tipp:
+  Ihr kennt bereits die Division mit Rest in \Java (modulo))? Schreibt ein
+  Programm, welches zwei Zahlen von der Nutzerin entgegen nimmt und ausgibt, ob
+  die zweite Zahl die erste teilt.
 \end{enumerate}
 
 \textbf{Spiel:}
 \begin{enumerate}
-    \item Testet mit verschiedenen Eingaben, was passiert, wenn ihr in
-        \texttt{if.cpp} statt zwei Gleichheitszeichen nur eines benutzt.
-        Benutzt den debugger, um euch den Inhalt von \texttt{b} vor und nach
-        dem Test anzuschauen.
-    \item Schreibt ein Programm, welches die Benutzerin fragt, wie sie heißt.
-        Gibt sie euren eigenen Namen ein, soll das Programm begeistert über die
-        Namensgleichheit sein, sonst sie einfach begrüßen.
+\item Testet mit verschiedenen Eingaben, was passiert, wenn ihr in
+  \texttt{If.java} statt zwei Gleichheitszeichen nur eines benutzt. Benutzt den
+  Debugger, um euch den Inhalt von \texttt{b} vor und nach dem Test anzuschauen.
+\item Schreibt ein Programm, welches die Benutzerin fragt, wie sie heißt. Gibt
+  sie Euren eigenen Namen ein, soll das Programm begeistert über die
+  Namensgleichheit sein, sonst die Nutzrin wie gewohnt begrüßen.
 \end{enumerate}
